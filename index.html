@@ -1,125 +1,439 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Encodex</title>
-    <link rel="icon" type="image/png" href="./LOGO/1.png">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>ENCODEX</title>
+    <link rel="icon" type="image/png" href="./LOGO/1.png" />
 
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap"
+      rel="stylesheet"
+    />
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="style.css">
-</head>
-<body>
+    <!-- QR Code Library -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
     <div class="background-gradient"></div>
-    
+
+    <!-- Theme Toggle Button -->
+    <button
+      class="theme-toggle"
+      id="theme-toggle"
+      title="Toggle Dark/Light Mode"
+    >
+      <span class="theme-icon">🌙</span>
+    </button>
+
     <div class="container">
-        <header>
-            <h1>ENCODEX</h1>
-            <p class="subtitle">End-to-end encryption in your browser. No servers. No tracking.</p>
-        </header>
+      <header>
+        <div class="logo">
+          <svg
+            class="logo-icon"
+            viewBox="0 0 100 100"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <rect
+              x="30"
+              y="45"
+              width="40"
+              height="35"
+              rx="5"
+              fill="url(#gradient1)"
+              stroke="url(#gradient2)"
+              stroke-width="2"
+            />
+            <path
+              d="M 35 45 L 35 30 Q 35 15, 50 15 Q 65 15, 65 30 L 65 45"
+              fill="none"
+              stroke="url(#gradient2)"
+              stroke-width="4"
+              stroke-linecap="round"
+            />
+            <circle cx="50" cy="57" r="4" fill="#0a0a0f" />
+            <rect x="48" y="57" width="4" height="10" rx="1" fill="#0a0a0f" />
+            <defs>
+              <linearGradient
+                id="gradient1"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop
+                  offset="0%"
+                  style="stop-color: #6366f1; stop-opacity: 1"
+                />
+                <stop
+                  offset="100%"
+                  style="stop-color: #818cf8; stop-opacity: 1"
+                />
+              </linearGradient>
+              <linearGradient
+                id="gradient2"
+                x1="0%"
+                y1="0%"
+                x2="100%"
+                y2="100%"
+              >
+                <stop
+                  offset="0%"
+                  style="stop-color: #818cf8; stop-opacity: 1"
+                />
+                <stop
+                  offset="100%"
+                  style="stop-color: #a5b4fc; stop-opacity: 1"
+                />
+              </linearGradient>
+            </defs>
+            <circle
+              cx="42"
+              cy="52"
+              r="3"
+              fill="rgba(255,255,255,0.3)"
+              opacity="0.6"
+            />
+          </svg>
+        </div>
+        <h1>ENCODEX</h1>
+        <p class="subtitle">
+          End-to-end encryption in your browser. No servers. No tracking.
+        </p>
+      </header>
 
-        <div class="grid">
-            <!-- ENCRYPT BOX -->
-            <div class="glass-box">
-                <div class="box-header">
-                    <h2>🔒 Encrypt Message</h2>
-                </div>
-                
-                <div class="form-group">
-                    <label for="plaintext">Your Message</label>
-                    <textarea 
-                        id="plaintext" 
-                        placeholder="Type your secret message here..."
-                        rows="6"
-                    ></textarea>
-                </div>
+      <!-- Templates Section -->
+      <div class="templates-section">
+        <h3>📝 Quick Templates</h3>
+        <div class="template-buttons">
+          <button class="template-btn" data-template="note">Secure Note</button>
+          <button class="template-btn" data-template="password">
+            Password Share
+          </button>
+          <button class="template-btn" data-template="meeting">
+            Meeting Info
+          </button>
+          <button class="template-btn" data-template="custom">Custom</button>
+        </div>
+      </div>
 
-                <div class="form-group">
-                    <label for="encrypt-passphrase">Shared Secret Passphrase</label>
-                    <input 
-                        type="password" 
-                        id="encrypt-passphrase" 
-                        placeholder="Enter a strong passphrase"
-                        autocomplete="off"
-                    >
-                </div>
-
-                <button class="btn btn-primary" id="encrypt-btn">
-                    <span class="btn-text">Encrypt</span>
-                </button>
-
-                <div class="form-group output-group" id="encrypted-output-group" style="display: none;">
-                    <label for="encrypted-output">Encrypted Output</label>
-                    <textarea 
-                        id="encrypted-output" 
-                        readonly
-                        rows="6"
-                    ></textarea>
-                    <button class="btn btn-secondary btn-small" id="copy-encrypted-btn">
-                        📋 Copy to Clipboard
-                    </button>
-                </div>
+      <div class="grid">
+        <!-- ENCRYPT BOX -->
+        <div class="glass-box">
+          <div class="box-header">
+            <h2>🔒 Encrypt Message</h2>
+            <div class="header-actions">
+              <button class="icon-btn" id="upload-file-btn" title="Upload File">
+                📁
+              </button>
+              <input
+                type="file"
+                id="file-input"
+                accept=".txt,.json,.md,.csv"
+                style="display: none"
+              />
             </div>
+          </div>
 
-            <!-- DECRYPT BOX -->
-            <div class="glass-box">
-                <div class="box-header">
-                    <h2>🔓 Decrypt Message</h2>
-                </div>
-                
-                <div class="form-group">
-                    <label for="encrypted-input">Encrypted Message</label>
-                    <textarea 
-                        id="encrypted-input" 
-                        placeholder="Paste encrypted message here..."
-                        rows="6"
-                    ></textarea>
-                </div>
-
-                <div class="form-group">
-                    <label for="decrypt-passphrase">Shared Secret Passphrase</label>
-                    <input 
-                        type="password" 
-                        id="decrypt-passphrase" 
-                        placeholder="Enter the same passphrase"
-                        autocomplete="off"
-                    >
-                </div>
-
-                <button class="btn btn-primary" id="decrypt-btn">
-                    <span class="btn-text">Decrypt</span>
-                </button>
-
-                <div class="form-group output-group" id="decrypted-output-group" style="display: none;">
-                    <label for="decrypted-output">Decrypted Message</label>
-                    <textarea 
-                        id="decrypted-output" 
-                        readonly
-                        rows="6"
-                    ></textarea>
-                </div>
-
-                <div class="error-message" id="decrypt-error" style="display: none;"></div>
+          <div class="form-group">
+            <div class="label-row">
+              <label for="plaintext">Your Message</label>
+              <span class="char-counter" id="plaintext-counter"
+                >0 characters</span
+              >
             </div>
+            <textarea
+              id="plaintext"
+              placeholder="Type your secret message here..."
+              rows="6"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="encrypt-passphrase">Shared Secret Passphrase</label>
+            <div class="password-input-group">
+              <input
+                type="password"
+                id="encrypt-passphrase"
+                placeholder="Enter a strong passphrase"
+                autocomplete="off"
+              />
+              <button
+                class="toggle-password"
+                data-target="encrypt-passphrase"
+                title="Show/Hide"
+              >
+                👁️
+              </button>
+              <button
+                class="generate-password"
+                id="generate-encrypt-pass"
+                title="Generate Strong Passphrase"
+              >
+                🎲
+              </button>
+            </div>
+            <!-- Password Strength Meter -->
+            <div class="strength-meter">
+              <div class="strength-bar" id="encrypt-strength-bar"></div>
+            </div>
+            <div class="strength-text" id="encrypt-strength-text"></div>
+          </div>
+
+          <!-- Compression Option -->
+          <div class="form-group checkbox-group">
+            <label class="checkbox-label">
+              <input type="checkbox" id="compress-option" checked />
+              <span
+                >🗜️ Compress message before encryption (recommended for long
+                texts)</span
+              >
+            </label>
+          </div>
+
+          <button class="btn btn-primary" id="encrypt-btn">
+            <span class="btn-text">Encrypt</span>
+          </button>
+
+          <div
+            class="form-group output-group"
+            id="encrypted-output-group"
+            style="display: none"
+          >
+            <div class="label-row">
+              <label for="encrypted-output">Encrypted Output</label>
+              <span class="char-counter" id="encrypted-counter"
+                >0 characters</span
+              >
+            </div>
+            <textarea id="encrypted-output" readonly rows="6"></textarea>
+            <div class="output-actions">
+              <button
+                class="btn btn-secondary btn-small"
+                id="copy-encrypted-btn"
+              >
+                📋 Copy
+              </button>
+              <button
+                class="btn btn-secondary btn-small"
+                id="share-encrypted-btn"
+              >
+                📤 Share
+              </button>
+              <button class="btn btn-secondary btn-small" id="qr-encrypted-btn">
+                📱 QR Code
+              </button>
+              <button
+                class="btn btn-secondary btn-small"
+                id="download-encrypted-btn"
+              >
+                💾 Download
+              </button>
+            </div>
+          </div>
+
+          <!-- QR Code Display -->
+          <div
+            class="qr-container"
+            id="qr-encrypt-container"
+            style="display: none"
+          >
+            <h4>📱 QR Code for Encrypted Message</h4>
+            <div id="qr-encrypt-code"></div>
+            <p class="qr-hint">Scan this code to get the encrypted message</p>
+          </div>
         </div>
 
-        <footer>
-            <div class="info-box">
-                <h3>ℹ️ How It Works</h3>
-                <ul>
-                    <li><strong>AES-GCM 256-bit encryption</strong> using Web Crypto API</li>
-                    <li>Your passphrase derives the encryption key via <strong>PBKDF2</strong></li>
-                    <li>Random salt & IV generated for each encryption</li>
-                    <li><strong>100% client-side</strong> - works offline, no data sent to servers</li>
-                    <li>Share the encrypted output and passphrase separately via different channels</li>
-                </ul>
+        <!-- DECRYPT BOX -->
+        <div class="glass-box">
+          <div class="box-header">
+            <h2>🔓 Decrypt Message</h2>
+          </div>
+
+          <div class="form-group">
+            <label for="encrypted-input">Encrypted Message</label>
+            <textarea
+              id="encrypted-input"
+              placeholder="Paste encrypted message here..."
+              rows="6"
+            ></textarea>
+          </div>
+
+          <div class="form-group">
+            <label for="decrypt-passphrase">Shared Secret Passphrase</label>
+            <div class="password-input-group">
+              <input
+                type="password"
+                id="decrypt-passphrase"
+                placeholder="Enter the same passphrase"
+                autocomplete="off"
+              />
+              <button
+                class="toggle-password"
+                data-target="decrypt-passphrase"
+                title="Show/Hide"
+              >
+                👁️
+              </button>
+              <button
+                class="generate-password"
+                id="generate-decrypt-pass"
+                title="Generate Strong Passphrase"
+              >
+                🎲
+              </button>
             </div>
-        </footer>
+            <!-- Password Strength Meter -->
+            <div class="strength-meter">
+              <div class="strength-bar" id="decrypt-strength-bar"></div>
+            </div>
+            <div class="strength-text" id="decrypt-strength-text"></div>
+          </div>
+
+          <button class="btn btn-primary" id="decrypt-btn">
+            <span class="btn-text">Decrypt</span>
+          </button>
+
+          <div
+            class="form-group output-group"
+            id="decrypted-output-group"
+            style="display: none"
+          >
+            <label for="decrypted-output">Decrypted Message</label>
+            <textarea id="decrypted-output" readonly rows="6"></textarea>
+            <div class="output-actions">
+              <button
+                class="btn btn-secondary btn-small"
+                id="copy-decrypted-btn"
+              >
+                📋 Copy
+              </button>
+              <button
+                class="btn btn-secondary btn-small"
+                id="download-decrypted-btn"
+              >
+                💾 Download
+              </button>
+            </div>
+            <!-- Message Age Warning -->
+            <div
+              class="message-age"
+              id="message-age"
+              style="display: none"
+            ></div>
+          </div>
+
+          <div
+            class="error-message"
+            id="decrypt-error"
+            style="display: none"
+          ></div>
+        </div>
+      </div>
+
+      <!-- Encryption History (Session Only) -->
+      <div class="history-section" id="history-section" style="display: none">
+        <div class="glass-box">
+          <div class="box-header">
+            <h2>📜 Session History</h2>
+            <button class="btn btn-secondary btn-small" id="clear-history-btn">
+              🗑️ Clear All
+            </button>
+          </div>
+          <div id="history-list" class="history-list"></div>
+          <p class="history-note">
+            ⚠️ History is cleared when you close this page
+          </p>
+        </div>
+      </div>
+
+      <footer>
+        <div class="info-box">
+          <h3>ℹ️ How It Works</h3>
+          <ul>
+            <li>
+              <strong>AES-GCM 256-bit encryption</strong> using Web Crypto API
+            </li>
+            <li>
+              Your passphrase derives the encryption key via
+              <strong>PBKDF2</strong>
+            </li>
+            <li>Random salt & IV generated for each encryption</li>
+            <li>
+              <strong>100% client-side</strong> - works offline, no data sent to
+              servers
+            </li>
+            <li>
+              Share the encrypted output and passphrase separately via different
+              channels
+            </li>
+            <li>
+              <strong>NEW:</strong> File encryption, QR codes, compression,
+              templates & more!
+            </li>
+          </ul>
+        </div>
+
+        <div class="info-box features-box">
+          <h3>✨ Features</h3>
+          <div class="features-grid">
+            <div class="feature">🔒 AES-GCM 256-bit</div>
+            <div class="feature">🎲 Password Generator</div>
+            <div class="feature">📊 Strength Meter</div>
+            <div class="feature">📁 File Encryption</div>
+            <div class="feature">📱 QR Code Support</div>
+            <div class="feature">🗜️ Compression</div>
+            <div class="feature">📝 Templates</div>
+            <div class="feature">🌙 Dark/Light Mode</div>
+            <div class="feature">📜 Session History</div>
+            <div class="feature">💾 Download Support</div>
+            <div class="feature">📤 Share Integration</div>
+            <div class="feature">⏰ Message Expiry</div>
+          </div>
+        </div>
+      </footer>
+    </div>
+
+    <!-- Modal for Passphrase Generator -->
+    <div class="modal" id="passphrase-modal" style="display: none">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h3>🎲 Strong Passphrase Generator</h3>
+          <button class="modal-close" id="close-modal">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="generated-passphrase" id="generated-passphrase">
+            <!-- Generated passphrase will appear here -->
+          </div>
+          <div class="generator-options">
+            <label class="checkbox-label">
+              <input type="checkbox" id="include-numbers" checked />
+              <span>Include Numbers</span>
+            </label>
+            <label class="checkbox-label">
+              <input type="checkbox" id="include-symbols" checked />
+              <span>Include Symbols</span>
+            </label>
+          </div>
+          <div class="modal-actions">
+            <button class="btn btn-primary" id="regenerate-pass-btn">
+              🔄 Regenerate
+            </button>
+            <button class="btn btn-secondary" id="copy-pass-btn">
+              📋 Copy
+            </button>
+            <button class="btn btn-secondary" id="use-pass-btn">
+              ✓ Use This
+            </button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <script src="script.js"></script>
-</body>
+  </body>
 </html>
